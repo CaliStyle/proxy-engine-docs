@@ -1,0 +1,857 @@
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Proxy Engine Documentation</title>
+
+    <style>
+      .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight .gh {
+  color: #999999;
+}
+.highlight .sr {
+  color: #f6aa11;
+}
+.highlight .go {
+  color: #888888;
+}
+.highlight .gp {
+  color: #555555;
+}
+.highlight .gs {
+}
+.highlight .gu {
+  color: #aaaaaa;
+}
+.highlight .nb {
+  color: #f6aa11;
+}
+.highlight .cm {
+  color: #75715e;
+}
+.highlight .cp {
+  color: #75715e;
+}
+.highlight .c1 {
+  color: #75715e;
+}
+.highlight .cs {
+  color: #75715e;
+}
+.highlight .c, .highlight .cd {
+  color: #75715e;
+}
+.highlight .err {
+  color: #960050;
+}
+.highlight .gr {
+  color: #960050;
+}
+.highlight .gt {
+  color: #960050;
+}
+.highlight .gd {
+  color: #49483e;
+}
+.highlight .gi {
+  color: #49483e;
+}
+.highlight .ge {
+  color: #49483e;
+}
+.highlight .kc {
+  color: #66d9ef;
+}
+.highlight .kd {
+  color: #66d9ef;
+}
+.highlight .kr {
+  color: #66d9ef;
+}
+.highlight .no {
+  color: #66d9ef;
+}
+.highlight .kt {
+  color: #66d9ef;
+}
+.highlight .mf {
+  color: #ae81ff;
+}
+.highlight .mh {
+  color: #ae81ff;
+}
+.highlight .il {
+  color: #ae81ff;
+}
+.highlight .mi {
+  color: #ae81ff;
+}
+.highlight .mo {
+  color: #ae81ff;
+}
+.highlight .m, .highlight .mb, .highlight .mx {
+  color: #ae81ff;
+}
+.highlight .sc {
+  color: #ae81ff;
+}
+.highlight .se {
+  color: #ae81ff;
+}
+.highlight .ss {
+  color: #ae81ff;
+}
+.highlight .sd {
+  color: #e6db74;
+}
+.highlight .s2 {
+  color: #e6db74;
+}
+.highlight .sb {
+  color: #e6db74;
+}
+.highlight .sh {
+  color: #e6db74;
+}
+.highlight .si {
+  color: #e6db74;
+}
+.highlight .sx {
+  color: #e6db74;
+}
+.highlight .s1 {
+  color: #e6db74;
+}
+.highlight .s {
+  color: #e6db74;
+}
+.highlight .na {
+  color: #a6e22e;
+}
+.highlight .nc {
+  color: #a6e22e;
+}
+.highlight .nd {
+  color: #a6e22e;
+}
+.highlight .ne {
+  color: #a6e22e;
+}
+.highlight .nf {
+  color: #a6e22e;
+}
+.highlight .vc {
+  color: #ffffff;
+}
+.highlight .nn {
+  color: #ffffff;
+}
+.highlight .nl {
+  color: #ffffff;
+}
+.highlight .ni {
+  color: #ffffff;
+}
+.highlight .bp {
+  color: #ffffff;
+}
+.highlight .vg {
+  color: #ffffff;
+}
+.highlight .vi {
+  color: #ffffff;
+}
+.highlight .nv {
+  color: #ffffff;
+}
+.highlight .w {
+  color: #ffffff;
+}
+.highlight {
+  color: #ffffff;
+}
+.highlight .n, .highlight .py, .highlight .nx {
+  color: #ffffff;
+}
+.highlight .ow {
+  color: #f92672;
+}
+.highlight .nt {
+  color: #f92672;
+}
+.highlight .k, .highlight .kv {
+  color: #f92672;
+}
+.highlight .kn {
+  color: #f92672;
+}
+.highlight .kp {
+  color: #f92672;
+}
+.highlight .o {
+  color: #f92672;
+}
+    </style>
+    <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/print.css" rel="stylesheet" media="print" />
+      <script src="javascripts/all.js"></script>
+  </head>
+
+  <body class="index" data-languages="[&quot;javascript&quot;]">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="images/navbar.png" alt="Navbar" />
+      </span>
+    </a>
+    <div class="toc-wrapper">
+      <img src="images/logo.png" class="logo" alt="Logo" />
+        <div class="lang-selector">
+              <a href="#" data-language-name="javascript">javascript</a>
+        </div>
+        <div class="search">
+          <input type="text" class="search" id="input-search" placeholder="Search">
+        </div>
+        <ul class="search-results"></ul>
+      <div id="toc" class="toc-list-h1">
+          <li>
+            <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#what-is-proxy-engine" class="toc-h2 toc-link" data-title="What is Proxy Engine?">What is Proxy Engine?</a>
+                  </li>
+                  <li>
+                    <a href="#4-core-features" class="toc-h2 toc-link" data-title="4 Core Features">4 Core Features</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#plugins" class="toc-h1 toc-link" data-title="Plugins">Plugins</a>
+          </li>
+          <li>
+            <a href="#example-app" class="toc-h1 toc-link" data-title="Example App">Example App</a>
+          </li>
+          <li>
+            <a href="#dependencies" class="toc-h1 toc-link" data-title="Dependencies">Dependencies</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#supported-orms" class="toc-h2 toc-link" data-title="Supported ORMs">Supported ORMs</a>
+                  </li>
+                  <li>
+                    <a href="#supported-webserver" class="toc-h2 toc-link" data-title="Supported Webserver">Supported Webserver</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#installation" class="toc-h1 toc-link" data-title="Installation">Installation</a>
+          </li>
+          <li>
+            <a href="#configuration" class="toc-h1 toc-link" data-title="Configuration">Configuration</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#config-main-js" class="toc-h2 toc-link" data-title="config/main.js">config/main.js</a>
+                  </li>
+                  <li>
+                    <a href="#config-proxyengine-js" class="toc-h2 toc-link" data-title="config/proxyEngine.js">config/proxyEngine.js</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#tutorial-event" class="toc-h1 toc-link" data-title="Tutorial: Event">Tutorial: Event</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#instance-events" class="toc-h2 toc-link" data-title="Instance Events">Instance Events</a>
+                  </li>
+                  <li>
+                    <a href="#global-events-todo" class="toc-h2 toc-link" data-title="Global Events (TODO)">Global Events (TODO)</a>
+                  </li>
+                  <li>
+                    <a href="#subscribing-to-events" class="toc-h2 toc-link" data-title="Subscribing to Events">Subscribing to Events</a>
+                  </li>
+                  <li>
+                    <a href="#automatically-subscribing-from-profile" class="toc-h2 toc-link" data-title="Automatically Subscribing From Profile">Automatically Subscribing From Profile</a>
+                  </li>
+                  <li>
+                    <a href="#subscribing-from-a-service" class="toc-h2 toc-link" data-title="Subscribing from a Service">Subscribing from a Service</a>
+                  </li>
+                  <li>
+                    <a href="#unsubscribe-from-an-event" class="toc-h2 toc-link" data-title="Unsubscribe from an Event">Unsubscribe from an Event</a>
+                  </li>
+                  <li>
+                    <a href="#creating-event-functions" class="toc-h2 toc-link" data-title="Creating Event functions">Creating Event functions</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#tutorial-task" class="toc-h1 toc-link" data-title="Tutorial: Task">Tutorial: Task</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#creating-task-functions" class="toc-h2 toc-link" data-title="Creating Task functions">Creating Task functions</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#tutorial-timed-job-cron" class="toc-h1 toc-link" data-title="Tutorial: Timed Job (Cron)">Tutorial: Timed Job (Cron)</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#creating-a-cron" class="toc-h2 toc-link" data-title="Creating a Cron">Creating a Cron</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#api-endpoints" class="toc-h1 toc-link" data-title="API: Endpoints">API: Endpoints</a>
+          </li>
+          <li>
+            <a href="#api-controllers" class="toc-h1 toc-link" data-title="API: Controllers">API: Controllers</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#eventcontroller" class="toc-h2 toc-link" data-title="EventController">EventController</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#api-crons" class="toc-h1 toc-link" data-title="API: Crons">API: Crons</a>
+          </li>
+          <li>
+            <a href="#api-events" class="toc-h1 toc-link" data-title="API: Events">API: Events</a>
+          </li>
+          <li>
+            <a href="#api-models" class="toc-h1 toc-link" data-title="API: Models">API: Models</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#event" class="toc-h2 toc-link" data-title="Event">Event</a>
+                  </li>
+                  <li>
+                    <a href="#eventsubscribers" class="toc-h2 toc-link" data-title="EventSubscribers">EventSubscribers</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#api-services" class="toc-h1 toc-link" data-title="API: Services">API: Services</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#proxyengineservice" class="toc-h2 toc-link" data-title="ProxyEngineService">ProxyEngineService</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#api-tasks" class="toc-h1 toc-link" data-title="API: Tasks">API: Tasks</a>
+          </li>
+          <li>
+            <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
+          </li>
+      </div>
+        <ul class="toc-footer">
+            <li><a href='https://github.com/CaliStyle/trailpack-proxy-engine'>Proxy Engine</a></li>
+        </ul>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        <h1 id='introduction'>Introduction</h1>
+<p>Welcome to the Proxy Engine Docs! Proxy Engine is an Open Source Node.js Framework created by the team at <a href="https://cali-style.com">Cali Style Technologies</a>.</p>
+<h2 id='what-is-proxy-engine'>What is Proxy Engine?</h2>
+<p>Proxy Engine is a modern backend scaffold for node applications built on the flexibility and speed of <a href="http://trailsjs.io">trails.js</a> which means extending it is easy and intuitive.</p>
+
+<p>Proxy Engine acts as an event management engine for a highly scalable and expandable architecture. It&#39;s &quot;event protocol&quot; allows for &quot;plugins&quot; to be easily implemented or ripped out to lighten the burden on development costs without sacrificing ease of use and scalability.</p>
+<h2 id='4-core-features'>4 Core Features</h2>
+<p>The goals of Proxy Engine is to be a free form scaffold that focuses on modern enterprise grade applications and testability. Each of these Core Features can be managed via a Worker Profile, allowing you to easily create micro services, or worker instances of your app. </p>
+
+<p>Proxy Engine marshals 4 Core Features:</p>
+<h3 id='events'>Events</h3>
+<p>Events are either emitted or consumed, if an event handler fails, it can retired based on &quot;retry rules&quot;. In short:
+- Publish
+- Subscribe
+- Retry </p>
+
+<p>A single Published Event can be consumed by an infinite amount of Subscribers. Subscribers that fail can have an infinite amount of Retries. This can be handy for fixing a bug post morten or if a 3rd party service is unavailable.  Events are optionally stored in a database as a &quot;Recorded History&quot;. Any event that fails is automatically stored, as well as any retry attempts.</p>
+<h3 id='tasks'>Tasks</h3>
+<p>Tasks are long running scripts that are processed in a que. For example: processing a video or crunching a large data set. Tasks can publish events, but not consume them. However, an event can trigger the creation of a new task.</p>
+<h3 id='timed-jobs-cron-jobs'>Timed Jobs (Cron Jobs)</h3>
+<p>Timed Jobs are scrips that process at specific times.  For example, once an hour, every day at noon, every 3rd wednesday of a month, etc. Timed Jobs can publish events, but not consume them. However, an event can enable or disable a Timed Job. Under the hood, Proxy Engine uses <a href="https://www.npmjs.com/package/node-schedule">Node Schedule</a> to define when the jobs will be run.</p>
+<h3 id='error-management'>Error Management</h3>
+<p>Error Management is one of the most important things to remember in development, especially for Node.js applications. Under the hood, Proxy Engine uses <a href="https://www.npmjs.com/package/boom">Boom</a> to define errors throughout the APIs.</p>
+<h1 id='plugins'>Plugins</h1>
+<p>Plugins are actually Trails.js &quot;Trailpacks&quot; that are built specifically for Proxy Engine.  However, since a Proxy Engine app is at it&#39;s core a Trails App, an extensive amount of trailpacks can easily be used.</p>
+
+<p>Currently in the Proxy Engine ecosystem and actively maintained by Cali Style: </p>
+
+<aside class="success">
+*WIP is a Work In Progress
+</aside>
+
+<ul>
+<li><a href="https://github.com/calistyle/trailpack-proxy-sequelize">Proxy-Sequelize</a> The default ORM for all Proxy Engine Apps. </li>
+<li><a href="https://github.com/calistyle/trailpack-proxy-router">Proxy-Router</a> The Content Router with built in AAA Testing (WIP)</li>
+<li><a href="https://github.com/calistyle/trailpack-proxy-cart">Proxy-Cart</a> A robust eCommerce Backend
+
+<ul>
+<li><a href="https://github.com/calistyle/trailpack-proxy-cart-countries">Proxy-Cart-Countries</a> Default Tax Rate Provider and Shipping Zones validator.</li>
+</ul></li>
+<li><a href="https://github.com/calistyle/trailpack-proxy-email">Proxy-Email</a> A robust Email Management System.</li>
+<li><a href="https://github.com/calistyle/trailpack-proxy-notifications">Proxy-Notifications</a> A robust Notifications System that works with Proxy Email.</li>
+<li><a href="https://github.com/calistyle/trailpack-proxy-cms">Proxy-CMS</a> A robust Content Management System (WIP)</li>
+<li><a href="https://github.com/calistyle/trailpack-proxy-analytics">Proxy-Analytics</a> A robust Analytics System (WIP)</li>
+<li><a href="https://github.com/calistyle/trailpack-proxy-sitemap">Proxy-Sitemap</a> A robust Sitemap Builder (WIP)</li>
+<li><a href="https://github.com/calistyle/trailpack-proxy-social">Proxy-Social</a> A robust Social network (WIP)</li>
+<li><a href="https://github.com/calistyle/trailpack-proxy-permissions">Proxy-Permissions</a> A robust ERP level Permissions Systems and Access Control List (ACL)</li>
+<li><a href="https://github.com/calistyle/trailpack-proxy-generics">Proxy-Generics</a> An adapter protocol for common functions
+
+<ul>
+<li><a href="https://github.com/CaliStyle/proxy-generics-stripe">Stripe.com Payment Processor</a></li>
+<li><a href="https://github.com/CaliStyle/proxy-generics-authorize.net">Authorize.net Payment Processor</a> (WIP)</li>
+<li><a href="https://github.com/CaliStyle/proxy-generics-shippo">GoShippo.com Shipping/Fulfillment Processor</a> (WIP)</li>
+<li><a href="https://github.com/CaliStyle/proxy-generics-shipstation">Shipstation.com Shipping/Fulfillment Processor</a> (WIP)</li>
+<li><a href="https://github.com/CaliStyle/proxy-generics-taxjar">Taxjar.com Tax Processor</a> (WIP)</li>
+<li><a href="https://github.com/CaliStyle/proxy-generics-mandrill">Mandrill Email Provider</a></li>
+<li><a href="https://github.com/CaliStyle/proxy-generics-gcloud">Gcloud Data Store Provider</a> (WIP)</li>
+<li><a href="https://github.com/calistyle/proxy-generics-google-maps">Google Maps Geolocation Provider</a> (WIP)</li>
+<li><a href="https://github.com/calistyle/proxy-generics-cloudinary">Cloudinary Image Provider</a> (WIP)</li>
+<li><a href="https://github.com/calistyle/proxy-generics-render">Render Service</a> for rendering HTML or Markdown</li>
+</ul></li>
+</ul>
+<h1 id='example-app'>Example App</h1>
+<p>We created a boiler plate to get you started
+<a href="https://github.com/CaliStyle/proxy-engine-example">Proxy Engine Example</a></p>
+<h1 id='dependencies'>Dependencies</h1><h2 id='supported-orms'>Supported ORMs</h2>
+<table><thead>
+<tr>
+<th>Repo</th>
+<th>Build Status (edge)</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><a href="https://github.com/trailsjs/trailpack-proxy-sequelize">trailpack-proxy-sequelize</a></td>
+<td><a href="https://travis-ci.org/trailsjs/trailpack-proxy-sequelize"><img src="https://img.shields.io/travis/trailsjs/trailpack-proxy-sequelize/master.svg?style=flat-square" alt="Build status" /></a></td>
+</tr>
+</tbody></table>
+<h2 id='supported-webserver'>Supported Webserver</h2>
+<table><thead>
+<tr>
+<th>Repo</th>
+<th>Build Status (edge)</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><a href="https://github.com/trailsjs/trailpack-express">trailpack-express</a></td>
+<td><a href="https://travis-ci.org/trailsjs/trailpack-express"><img src="https://img.shields.io/travis/trailsjs/trailpack-express/master.svg?style=flat-square" alt="Build status" /></a></td>
+</tr>
+</tbody></table>
+<h1 id='installation'>Installation</h1>
+<p>To install Proxy Engine:</p>
+
+<p><code>
+$ npm install trailpack-proxy-engine
+</code></p>
+
+<p>If you are using Trail&#39;s yo generator:</p>
+
+<p><code>
+$ yo trails:trailpack trailpack-proxy-engine
+</code></p>
+<h1 id='configuration'>Configuration</h1>
+<p>To configure Proxy Engine is simple, there are only 2 files to create/modify:</p>
+<h2 id='config-main-js'>config/main.js</h2>
+<blockquote>
+<p>config/main.js</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">packs</span><span class="p">:</span> <span class="p">[</span>
+    <span class="c1">// ... other trailpacks</span>
+    <span class="nx">require</span><span class="p">(</span><span class="s1">'trailpack-proxy-engine'</span><span class="p">)</span>
+    <span class="c1">// ... other proxy-packs</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</code></pre>
+<p>Like all Trails&#39; trailpacks, it must be included in the <code>config/main.js</code> file.</p>
+<h2 id='config-proxyengine-js'>config/proxyEngine.js</h2>
+<blockquote>
+<p>config/proxyEngine.js</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="c1">// If the app is in live mode</span>
+  <span class="na">live_mode</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="c1">// If every event should be saved automatically</span>
+  <span class="na">auto_save</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+  <span class="c1">// The worker env profile for this app</span>
+  <span class="na">profile</span><span class="p">:</span> <span class="s1">'testProfile'</span><span class="p">,</span>
+  <span class="c1">// Configure Cron Jobs</span>
+  <span class="na">crons_config</span><span class="p">:</span> <span class="p">{</span>
+    <span class="c1">// Delay when cron jobs are allowed to start being processed in seconds</span>
+    <span class="na">uptime_delay</span><span class="p">:</span> <span class="mi">180</span><span class="p">,</span>
+    <span class="c1">// The profiles that are able to run specified crons</span>
+    <span class="na">profiles</span><span class="p">:</span> <span class="p">{</span>
+      <span class="c1">// If the worker matches `testProfile`, then it's crons can run</span>
+      <span class="na">testProfile</span><span class="p">:</span>  <span class="p">[</span><span class="s1">'onTestCron.test'</span><span class="p">],</span>
+      <span class="c1">// If the worker matches `otherProfile`, then it's crons can run</span>
+      <span class="na">otherProfile</span><span class="p">:</span> <span class="p">[</span><span class="s1">'otherTestCron.test'</span><span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="c1">// Configure Events</span>
+  <span class="na">events_config</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">profiles</span><span class="p">:</span> <span class="p">{</span>
+      <span class="c1">// If the worker matches `testProfile`, then it's events can run</span>
+      <span class="na">testProfile</span><span class="p">:</span>  <span class="p">[</span><span class="s1">'onTestEvent.test'</span><span class="p">],</span>
+      <span class="c1">// If the worker matches `otherProfile`, then it's events can run</span>
+      <span class="na">otherProfile</span><span class="p">:</span> <span class="p">[</span><span class="s1">'otherTestEvent.test'</span><span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="c1">// Configure Tasks</span>
+  <span class="na">tasks_config</span><span class="p">:</span> <span class="p">{</span>
+    <span class="c1">// The profiles that are able to run specified tasks</span>
+    <span class="na">profiles</span><span class="p">:</span> <span class="p">{</span>
+      <span class="c1">// If the worker matches `testProfile`, then it's tasks can run</span>
+      <span class="na">testProfile</span><span class="p">:</span> <span class="p">[</span><span class="s1">'TestTask'</span><span class="p">],</span>
+      <span class="c1">// If the worker matches `otherProfile`, then it's tasks can run</span>
+      <span class="na">otherProfile</span><span class="p">:</span> <span class="p">[</span><span class="s1">'OtherTestTask'</span><span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<p>Also, Proxy Engine takes it&#39;s own config in the <code>config/proxyEngine.js</code> file.</p>
+<h3 id='config-parameters'>Config Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>live_mode</td>
+<td>Boolean</td>
+<td>false</td>
+<td>If the app is in live mode</td>
+</tr>
+<tr>
+<td>auto_save</td>
+<td>Boolean</td>
+<td>false</td>
+<td>If every Event should be saved</td>
+</tr>
+<tr>
+<td>profile</td>
+<td>String</td>
+<td>null</td>
+<td>The name of this App Instance&#39;s profile</td>
+</tr>
+<tr>
+<td>crons_config</td>
+<td>Object</td>
+<td>{}</td>
+<td>The configuration of the Timed Jobs (Cron Jobs)</td>
+</tr>
+<tr>
+<td>events_config</td>
+<td>Object</td>
+<td>{}</td>
+<td>The configuration of the Events</td>
+</tr>
+<tr>
+<td>tasks_config</td>
+<td>Object</td>
+<td>{}</td>
+<td>The configuration of Tasks.</td>
+</tr>
+</tbody></table>
+<h1 id='tutorial-event'>Tutorial: Event</h1>
+<p>Proxy Engine events are contained into <strong>two</strong> base categories: Instance, Global.</p>
+
+<p>Events should always return a promise and resolve (succeed) and return a value or they should reject (throw an error) which will trigger a retry on the burn down schedule.</p>
+<h2 id='instance-events'>Instance Events</h2>
+<p>Instance Events are events that <strong>only a single instance</strong> in a cluster must deal with. The overwhelming majority of events fall into this category. Mostly, database events, service events etc.</p>
+<h2 id='global-events-todo'>Global Events (TODO)</h2>
+<p>Global Events are events that <strong>every instance</strong> in a cluster must respond to. Very few events fall into this category. Mostly, global settings changes, plugin updates, notifications, etc. This requires redis.</p>
+
+<p>Events make it easy to extend functionality without having to edit or change the core of any Proxy Engine Module.</p>
+<h2 id='subscribing-to-events'>Subscribing to Events</h2>
+<p>Subscribe takes three arguments:</p>
+
+<table><thead>
+<tr>
+<th>Argument</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>CallAgainLocation</td>
+<td>String</td>
+<td>NONE</td>
+<td>he location of the Callback function in dot notation eg. <code>onCustomer.created</code>. This is used when the first try of the event fails.</td>
+</tr>
+<tr>
+<td>EventName</td>
+<td>String</td>
+<td>NONE</td>
+<td>The name of the event to subscribe to eg. <code>customer.created</code></td>
+</tr>
+<tr>
+<td>Callback</td>
+<td>Function</td>
+<td>NONE</td>
+<td>he function to execute when this event happens.</td>
+</tr>
+</tbody></table>
+
+<aside class="success">
+NOTE: Proxy Engine will automatically run the subscribe method for your events if you provide a `subscribe` method in your event handler.
+</aside>
+<h2 id='automatically-subscribing-from-profile'>Automatically Subscribing From Profile</h2>
+<blockquote>
+<p>Example Profile Config: app/config/proxyEngine.js</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="c1">// ... other configuration</span>
+  <span class="na">profile</span><span class="p">:</span> <span class="s1">'testProfile'</span><span class="p">,</span>
+  <span class="na">events_config</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">profiles</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">testProfile</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s1">'onTestEvent.test3'</span><span class="p">,</span>
+        <span class="s1">'onTestEvent.test4'</span>
+      <span class="p">],</span>
+      <span class="na">otherProfile</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s1">'onTestEvent.test'</span>
+      <span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<p>Alternatively, you can let your profile decide what events it will subscribe to:</p>
+<h2 id='subscribing-from-a-service'>Subscribing from a Service</h2>
+<blockquote>
+<p>Subscribe to an Event from a Service</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="c1">// From some service in your app</span>
+<span class="kr">const</span> <span class="nx">ProxyEngineService</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">app</span><span class="p">.</span><span class="nx">services</span><span class="p">.</span><span class="nx">ProxyEngineService</span>
+<span class="c1">// Create a token that you can use later.</span>
+<span class="kr">const</span> <span class="nx">token</span> <span class="o">=</span> <span class="nx">ProxyEngineService</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">(</span><span class="s1">'callAgainLocation'</span><span class="p">,</span> <span class="s1">'eventName'</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span>
+</code></pre>
+<p>Also Alternatively, you can subscribe to an event in a service.</p>
+<h2 id='unsubscribe-from-an-event'>Unsubscribe from an Event</h2>
+<blockquote>
+<p>Unsubscribe to an Event from a Service</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="c1">// continued from above</span>
+<span class="nx">ProxyEngineService</span><span class="p">.</span><span class="nx">unsubscribe</span><span class="p">(</span><span class="nx">token</span><span class="p">)</span>
+</code></pre>
+<p>Once subscribed, to unsubscribe just call the unsubscribe method using the token it was created with.</p>
+<h2 id='creating-event-functions'>Creating Event functions</h2>
+<p>Create events in the <code>/api/events</code> directory.</p>
+<h4 id='subscribe'>Subscribe</h4>
+<p>The <code>subscribe()</code> method method has reserved functionality and is intended to automatically subscribe instances regardless of their worker profile.  It&#39;s possible to have an instance level cron job gather information from a remote site and change the instance by publishing and event that it is automatically subscribed to. </p>
+
+<blockquote>
+<p>Example: api/events/onTestEvent.js</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">Event</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'trailpack-proxy-engine'</span><span class="p">).</span><span class="nx">Event</span>
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="kr">class</span> <span class="nx">onTestEvent</span> <span class="kr">extends</span> <span class="nx">Event</span> <span class="p">{</span>
+  <span class="c1">// Subscribe Method is called during the Configuration of the trailpack, regardless of worker profile.</span>
+  <span class="nx">subscribe</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">app</span><span class="p">.</span><span class="nx">services</span><span class="p">.</span><span class="nx">ProxyEngineService</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">(</span><span class="s1">'onTestEvent.test'</span><span class="p">,</span><span class="s1">'test'</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">test</span><span class="p">)</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">app</span><span class="p">.</span><span class="nx">services</span><span class="p">.</span><span class="nx">ProxyEngineService</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">(</span><span class="s1">'onTestEvent.test2'</span><span class="p">,</span><span class="s1">'test2'</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">test2</span><span class="p">)</span>
+  <span class="p">}</span>
+
+  <span class="nx">test</span><span class="p">(</span><span class="nx">msg</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// This function will be run when a `test` event is published</span>
+    <span class="k">return</span> <span class="nx">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">()</span>
+  <span class="p">}</span>
+  <span class="nx">test2</span><span class="p">(</span><span class="nx">msg</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// This function will be run when a `test2` event is published</span>
+    <span class="k">return</span> <span class="nx">Promise</span><span class="p">.</span><span class="nx">reject</span><span class="p">()</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre><h1 id='tutorial-task'>Tutorial: Task</h1>
+<p>While event functions respond to events, tasks initiate functions allowed on a specific worker. A common use of a task is a micro-service or a worker environment for example, processing video or any other significant process that should be segregated out to a more adapt worker environment.</p>
+<h2 id='creating-task-functions'>Creating Task functions</h2>
+<p>Create tasks in the <code>/api/tasks</code> directory. </p>
+<pre class="highlight javascript tab-javascript"><code><span class="nx">TODO</span>
+</code></pre><h1 id='tutorial-timed-job-cron'>Tutorial: Timed Job (Cron)</h1><h2 id='creating-a-cron'>Creating a Cron</h2>
+<p>Create cron jobs in the <code>/api/crons</code> directory. Crons use <a href="https://www.npmjs.com/package/node-schedule">node-schedule</a> and are configured per worker profile.  Using the <code>uptime_delay</code> in the <code>crons_config</code> can also allow you to delay when cron jobs start to be scheduled. This is useful for when you have an app instance that starts while another is gracefully being shut down.</p>
+<h3 id='schedule-method'>Schedule Method</h3>
+<blockquote>
+<p>Example: api/crons/onTestCron.js</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="kr">class</span> <span class="nx">onTestCron</span> <span class="kr">extends</span> <span class="nx">Cron</span> <span class="p">{</span>
+  <span class="c1">// Schedule Method is called during the Configuration of the trailpack</span>
+  <span class="c1">// Schedule method is reserved to automatically do something regardless of profile.</span>
+  <span class="nx">schedule</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">test</span><span class="p">()</span>
+  <span class="p">}</span>
+  <span class="nx">test</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'I have been scheduled'</span><span class="p">)</span>
+    <span class="kr">const</span> <span class="nx">j</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">scheduler</span><span class="p">.</span><span class="nx">scheduleJob</span><span class="p">(</span><span class="s1">'42 * * * *'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'The answer to life, the universe, and everything!'</span><span class="p">)</span>
+    <span class="p">})</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<p>The <code>schedule()</code> method has reserved functionality and is intended to automatically schedule other tasks regardless of worker profile.  This is useful for cron jobs that do instance level maintenance. It is not recommended to be used for cron jobs that perform global operations.</p>
+
+<aside class="success">
+NOTE: If a Cron fails, it is not automatically retried. If you want parts of your cron job to retry automatically, you will need publish them as an event and consume them as a subscriber.
+</aside>
+<h1 id='api-endpoints'>API: Endpoints</h1><pre class="highlight json tab-json"><code><span class="p">[{</span><span class="w">
+    </span><span class="err">method</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="err">'GET'</span><span class="p">],</span><span class="w">
+    </span><span class="err">path</span><span class="p">:</span><span class="w"> </span><span class="err">'/events'</span><span class="p">,</span><span class="w">
+    </span><span class="err">handler</span><span class="p">:</span><span class="w"> </span><span class="err">'EventController.findAll'</span><span class="p">,</span><span class="w">
+    </span><span class="err">config</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="err">validate</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="err">query</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="err">offset</span><span class="p">:</span><span class="w"> </span><span class="err">joi.number()</span><span class="p">,</span><span class="w">
+          </span><span class="err">limit</span><span class="p">:</span><span class="w"> </span><span class="err">joi.number()</span><span class="p">,</span><span class="w">
+          </span><span class="err">where</span><span class="p">:</span><span class="w"> </span><span class="err">joi.object()</span><span class="p">,</span><span class="w">
+          </span><span class="err">sort</span><span class="p">:</span><span class="w"> </span><span class="err">joi.array().items(joi.array())</span><span class="p">,</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="err">app</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="err">proxyRouter</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="err">ignore</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="err">proxyPermissions</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="err">resource_name</span><span class="p">:</span><span class="w"> </span><span class="err">'apiGetEventsRoute'</span><span class="p">,</span><span class="w">
+          </span><span class="err">roles</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="err">'admin'</span><span class="p">]</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">},</span><span class="w">
+</span><span class="p">{</span><span class="w">
+    </span><span class="err">method</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="err">'POST'</span><span class="p">],</span><span class="w">
+    </span><span class="err">path</span><span class="p">:</span><span class="w"> </span><span class="err">'/event'</span><span class="p">,</span><span class="w">
+    </span><span class="err">handler</span><span class="p">:</span><span class="w"> </span><span class="err">'EventController.create'</span><span class="p">,</span><span class="w">
+    </span><span class="err">config</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="err">app</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="err">proxyRouter</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="err">ignore</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="err">proxyPermissions</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="err">resource_name</span><span class="p">:</span><span class="w"> </span><span class="err">'apiPostEventRoute'</span><span class="p">,</span><span class="w">
+          </span><span class="err">roles</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="err">'admin'</span><span class="p">]</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">},</span><span class="w">
+</span><span class="p">{</span><span class="w">
+    </span><span class="err">method</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="err">'GET'</span><span class="p">],</span><span class="w">
+    </span><span class="err">path</span><span class="p">:</span><span class="w"> </span><span class="err">'/event/</span><span class="p">:</span><span class="err">id'</span><span class="p">,</span><span class="w">
+    </span><span class="err">handler</span><span class="p">:</span><span class="w"> </span><span class="err">'EventController.findOne'</span><span class="p">,</span><span class="w">
+    </span><span class="err">config</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="err">validate</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="err">params</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="err">id</span><span class="p">:</span><span class="w"> </span><span class="err">joi.string().required()</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="err">app</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="err">proxyRouter</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="err">ignore</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="err">proxyPermissions</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="err">resource_name</span><span class="p">:</span><span class="w"> </span><span class="err">'apiGetEventIdRoute'</span><span class="p">,</span><span class="w">
+          </span><span class="err">roles</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="err">'admin'</span><span class="p">]</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}]</span><span class="w">
+</span></code></pre><h1 id='api-controllers'>API: Controllers</h1><h2 id='eventcontroller'>EventController</h2><h1 id='api-crons'>API: Crons</h1>
+<blockquote>
+<p>Example api/crons/index.js</p>
+</blockquote>
+<h1 id='api-events'>API: Events</h1>
+<blockquote>
+<p>Example api/events/index.js</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="nx">exports</span><span class="p">.</span><span class="nx">myEvent</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'./myEvent'</span><span class="p">)</span>
+</code></pre>
+<p>Create new Event handlers in the <code>api/events</code> directory</p>
+<h1 id='api-models'>API: Models</h1><h2 id='event'>Event</h2>
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+</tbody></table>
+<h2 id='eventsubscribers'>EventSubscribers</h2>
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+</tbody></table>
+<h1 id='api-services'>API: Services</h1><h2 id='proxyengineservice'>ProxyEngineService</h2><h1 id='api-tasks'>API: Tasks</h1><h1 id='errors'>Errors</h1>
+<aside class="notice">This error section is stored in a separate file in `includes/_errors.md`. Slate allows you to optionally separate out your docs into many files...just save them to the `includes` folder and add them to the top of your `index.md`'s frontmatter. Files are included in the order listed.</aside>
+
+<p>The Kittn API uses the following error codes:</p>
+
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>400</td>
+<td>Bad Request -- Your request sucks.</td>
+</tr>
+<tr>
+<td>401</td>
+<td>Unauthorized -- Your API key is wrong.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>Forbidden -- The kitten requested is hidden for administrators only.</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Not Found -- The specified kitten could not be found.</td>
+</tr>
+<tr>
+<td>405</td>
+<td>Method Not Allowed -- You tried to access a kitten with an invalid method.</td>
+</tr>
+<tr>
+<td>406</td>
+<td>Not Acceptable -- You requested a format that isn&#39;t json.</td>
+</tr>
+<tr>
+<td>410</td>
+<td>Gone -- The kitten requested has been removed from our servers.</td>
+</tr>
+<tr>
+<td>418</td>
+<td>I&#39;m a teapot.</td>
+</tr>
+<tr>
+<td>429</td>
+<td>Too Many Requests -- You&#39;re requesting too many kittens! Slow down!</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal Server Error -- We had a problem with our server. Try again later.</td>
+</tr>
+<tr>
+<td>503</td>
+<td>Service Unavailable -- We&#39;re temporarily offline for maintenance. Please try again later.</td>
+</tr>
+</tbody></table>
+
+      </div>
+      <div class="dark-box">
+          <div class="lang-selector">
+                <a href="#" data-language-name="javascript">javascript</a>
+          </div>
+      </div>
+    </div>
+  </body>
+</html>
