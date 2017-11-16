@@ -304,6 +304,11 @@
           </li>
           <li>
             <a href="#api-endpoints" class="toc-h1 toc-link" data-title="API: Endpoints">API: Endpoints</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#routes" class="toc-h2 toc-link" data-title="Routes">Routes</a>
+                  </li>
+              </ul>
           </li>
           <li>
             <a href="#api-controllers" class="toc-h1 toc-link" data-title="API: Controllers">API: Controllers</a>
@@ -697,7 +702,7 @@ NOTE: Proxy Engine will automatically run the subscribe method for your events i
 <aside class="success">
 NOTE: If a Cron fails, it is not automatically retried. If you want parts of your cron job to retry automatically, you will need publish them as an event and consume them as a subscriber.
 </aside>
-<h1 id='api-endpoints'>API: Endpoints</h1><pre class="highlight json tab-json"><code><span class="p">[{</span><span class="w">
+<h1 id='api-endpoints'>API: Endpoints</h1><h2 id='routes'>Routes</h2><pre class="highlight json tab-json"><code><span class="p">[{</span><span class="w">
     </span><span class="err">method</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="err">'GET'</span><span class="p">],</span><span class="w">
     </span><span class="err">path</span><span class="p">:</span><span class="w"> </span><span class="err">'/events'</span><span class="p">,</span><span class="w">
     </span><span class="err">handler</span><span class="p">:</span><span class="w"> </span><span class="err">'EventController.findAll'</span><span class="p">,</span><span class="w">
