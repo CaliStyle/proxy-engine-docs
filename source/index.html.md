@@ -178,7 +178,7 @@ crons_config | Object | {} | The configuration of the Timed Jobs (Cron Jobs)
 events_config | Object | {} | The configuration of the Events
 tasks_config | Object | {} | The configuration of Tasks.
 
-# Event Tutorial
+# Tutorial: Event
 Proxy Engine events are contained into __two__ base categories: Instance, Global.
 
 Events should always return a promise and resolve (succeed) and return a value or they should reject (throw an error) which will trigger a retry on the burn down schedule.
@@ -276,7 +276,7 @@ module.exports = class onTestEvent extends Event {
 }
 ```
 
-# Task Tutorial
+# Tutorial: Task
 While event functions respond to events, tasks initiate functions allowed on a specific worker. A common use of a task is a micro-service or a worker environment for example, processing video or any other significant process that should be segregated out to a more adapt worker environment.
 
 ## Creating Task functions
@@ -286,10 +286,10 @@ Create tasks in the `/api/tasks` directory.
 TODO
 ```
 
-# Timed Job (Cron) Tutorial
+# Tutorial: Timed Job (Cron) 
 
-## Creating Cron
-Create crons in the `/api/crons` directory. Crons use [node-schedule](https://www.npmjs.com/package/node-schedule) and are configured per worker profile.  Using the uptime_delay in the `crons_config` can also allow you to delay when crons start to be scheduled. This is useful for when you have an app instance that starts while another is gracefully being shut down.
+## Creating a Cron
+Create cron jobs in the `/api/crons` directory. Crons use [node-schedule](https://www.npmjs.com/package/node-schedule) and are configured per worker profile.  Using the `uptime_delay` in the `crons_config` can also allow you to delay when cron jobs start to be scheduled. This is useful for when you have an app instance that starts while another is gracefully being shut down.
 
 ### Schedule Method
 > Example: api/crons/onTestCron.js
@@ -315,14 +315,80 @@ The `schedule()` method has reserved functionality and is intended to automatica
 NOTE: If a Cron fails, it is not automatically retried. If you want parts of your cron job to retry automatically, you will need publish them as an event and consume them as a subscriber.
 </aside>
 
-# API - Controllers
+# API: Endpoints
+## 
+```json
+[{
+    method: ['GET'],
+    path: '/events',
+    handler: 'EventController.findAll',
+    config: {
+      validate: {
+        query: {
+          offset: joi.number(),
+          limit: joi.number(),
+          where: joi.object(),
+          sort: joi.array().items(joi.array()),
+        }
+      },
+      app: {
+        proxyRouter: {
+          ignore: true
+        },
+        proxyPermissions: {
+          resource_name: 'apiGetEventsRoute',
+          roles: ['admin']
+        }
+      }
+    }
+},
+{
+    method: ['POST'],
+    path: '/event',
+    handler: 'EventController.create',
+    config: {
+      app: {
+        proxyRouter: {
+          ignore: true
+        },
+        proxyPermissions: {
+          resource_name: 'apiPostEventRoute',
+          roles: ['admin']
+        }
+      }
+    }
+},
+{
+    method: ['GET'],
+    path: '/event/:id',
+    handler: 'EventController.findOne',
+    config: {
+      validate: {
+        params: {
+          id: joi.string().required()
+        }
+      },
+      app: {
+        proxyRouter: {
+          ignore: true
+        },
+        proxyPermissions: {
+          resource_name: 'apiGetEventIdRoute',
+          roles: ['admin']
+        }
+      }
+    }
+}]
+```
+
+# API: Controllers
 
 ## EventController
 
-# API - Crons
+# API: Crons
 > Example api/crons/index.js
 
-# API - Events
+# API: Events
 > Example api/events/index.js
 
 ```javascript
@@ -330,7 +396,7 @@ exports.myEvent = require('./myEvent')
 ```
 Create new Event handlers in the `api/events` directory
 
-# API - Models
+# API: Models
 
 ## Event
 Attribute | Type | Default | Description
@@ -341,10 +407,10 @@ Attribute | Type | Default | Description
 Attribute | Type | Default | Description
 --------- | ---- | ------- | -----------
 
-# API - Services
+# API: Services
 ## ProxyEngineService
 
-# API - Tasks
+# API: Tasks
 
 
 [ci-sequelize-image]: https://img.shields.io/travis/trailsjs/trailpack-proxy-sequelize/master.svg?style=flat-square
