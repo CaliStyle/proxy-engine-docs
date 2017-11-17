@@ -581,22 +581,22 @@ $ yo trails:trailpack trailpack-proxy-engine
 </tr>
 </thead><tbody>
 <tr>
-<td>CallAgainLocation</td>
+<td>callAgainLocation</td>
 <td>String</td>
 <td>NONE</td>
-<td>he location of the Callback function in dot notation eg. <code>onCustomer.created</code>. This is used when the first try of the event fails.</td>
+<td>The location of the Callback function in dot notation eg. <code>onCustomer.created</code>. This is used when the first try of the event fails.</td>
 </tr>
 <tr>
-<td>EventName</td>
+<td>eventName</td>
 <td>String</td>
 <td>NONE</td>
 <td>The name of the event to subscribe to eg. <code>customer.created</code></td>
 </tr>
 <tr>
-<td>Callback</td>
+<td>func</td>
 <td>Function</td>
 <td>NONE</td>
-<td>he function to execute when this event happens.</td>
+<td>The function to execute when this event happens.</td>
 </tr>
 </tbody></table>
 
@@ -673,7 +673,9 @@ NOTE: Proxy Engine will automatically run the subscribe method for your events i
 <p>Create tasks in the <code>/api/tasks</code> directory. </p>
 <pre class="highlight javascript tab-javascript"><code><span class="nx">TODO</span>
 </code></pre><h1 id='tutorial-timed-job-cron'>Tutorial: Timed Job (Cron)</h1><h2 id='creating-a-cron'>Creating a Cron</h2>
-<p>Create cron jobs in the <code>/api/crons</code> directory. Crons use <a href="https://www.npmjs.com/package/node-schedule">node-schedule</a> and are configured per worker profile.  Using the <code>uptime_delay</code> in the <code>crons_config</code> can also allow you to delay when cron jobs start to be scheduled. This is useful for when you have an app instance that starts while another is gracefully being shut down.</p>
+<p>Create cron jobs in the <code>/api/crons</code> directory. Cron Jobs use <a href="https://www.npmjs.com/package/node-schedule">node-schedule</a> and are configured per worker profile.  </p>
+
+<p>Using the <code>uptime_delay</code> in the <code>crons_config</code> can also allow you to delay when cron jobs start to be scheduled. This is useful for when you have an app instance that starts while another is gracefully being shut down.</p>
 <h3 id='schedule-method'>Schedule Method</h3>
 <blockquote>
 <p>Example: api/crons/onTestCron.js</p>
