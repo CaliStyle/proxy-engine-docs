@@ -196,9 +196,9 @@ Subscribe takes three arguments:
 
 Argument | Type | Default | Description
 -------- | ---- | ------- | -----------
-CallAgainLocation | String | NONE | he location of the Callback function in dot notation eg. `onCustomer.created`. This is used when the first try of the event fails.
-EventName | String | NONE | The name of the event to subscribe to eg. `customer.created`
-Callback | Function | NONE | he function to execute when this event happens.
+callAgainLocation | String | NONE | The location of the Callback function in dot notation eg. `onCustomer.created`. This is used when the first try of the event fails.
+eventName | String | NONE | The name of the event to subscribe to eg. `customer.created`
+func | Function | NONE | The function to execute when this event happens.
 
 <aside class="success">
 NOTE: Proxy Engine will automatically run the subscribe method for your events if you provide a `subscribe` method in your event handler.
@@ -289,7 +289,9 @@ TODO
 # Tutorial: Timed Job (Cron) 
 
 ## Creating a Cron
-Create cron jobs in the `/api/crons` directory. Crons use [node-schedule](https://www.npmjs.com/package/node-schedule) and are configured per worker profile.  Using the `uptime_delay` in the `crons_config` can also allow you to delay when cron jobs start to be scheduled. This is useful for when you have an app instance that starts while another is gracefully being shut down.
+Create cron jobs in the `/api/crons` directory. Cron Jobs use [node-schedule](https://www.npmjs.com/package/node-schedule) and are configured per worker profile.  
+
+Using the `uptime_delay` in the `crons_config` can also allow you to delay when cron jobs start to be scheduled. This is useful for when you have an app instance that starts while another is gracefully being shut down.
 
 ### Schedule Method
 > Example: api/crons/onTestCron.js
