@@ -304,6 +304,17 @@
           </li>
           <li>
             <a href="#api-endpoints" class="toc-h1 toc-link" data-title="API: Endpoints">API: Endpoints</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#get-events" class="toc-h2 toc-link" data-title="GET /events">GET /events</a>
+                  </li>
+                  <li>
+                    <a href="#post-event" class="toc-h2 toc-link" data-title="POST /event">POST /event</a>
+                  </li>
+                  <li>
+                    <a href="#get-event-id" class="toc-h2 toc-link" data-title="GET /event/:id">GET /event/:id</a>
+                  </li>
+              </ul>
           </li>
           <li>
             <a href="#api-controllers" class="toc-h1 toc-link" data-title="API: Controllers">API: Controllers</a>
@@ -481,6 +492,8 @@ $ yo trails:trailpack trailpack-proxy-engine
   <span class="na">profile</span><span class="p">:</span> <span class="s1">'testProfile'</span><span class="p">,</span>
   <span class="c1">// Configure Cron Jobs</span>
   <span class="na">crons_config</span><span class="p">:</span> <span class="p">{</span>
+    <span class="c1">// If a Cron class has a 'schedule' method, automatically call it on config.</span>
+    <span class="na">auto_schedule</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
     <span class="c1">// Delay when cron jobs are allowed to start being processed in seconds</span>
     <span class="na">uptime_delay</span><span class="p">:</span> <span class="mi">180</span><span class="p">,</span>
     <span class="c1">// The profiles that are able to run specified crons</span>
@@ -493,6 +506,9 @@ $ yo trails:trailpack trailpack-proxy-engine
   <span class="p">},</span>
   <span class="c1">// Configure Events</span>
   <span class="na">events_config</span><span class="p">:</span> <span class="p">{</span>
+    <span class="c1">// if the Event class has a 'subscribe' method, automatically call it during config.</span>
+    <span class="na">auto_subscribe</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="c1">// The profiles that are able to run specified events</span>
     <span class="na">profiles</span><span class="p">:</span> <span class="p">{</span>
       <span class="c1">// If the worker matches `testProfile`, then it's events can run</span>
       <span class="na">testProfile</span><span class="p">:</span>  <span class="p">[</span><span class="s1">'onTestEvent.test'</span><span class="p">],</span>
@@ -645,8 +661,6 @@ NOTE: Proxy Engine will automatically run the subscribe method for your events i
 <h2 id='creating-event-functions'>Creating Event functions</h2>
 <p>Create events in the <code>/api/events</code> directory.</p>
 <h4 id='subscribe'>Subscribe</h4>
-<p>The <code>subscribe()</code> method method has reserved functionality and is intended to automatically subscribe instances regardless of their worker profile.  It&#39;s possible to have an instance level cron job gather information from a remote site and change the instance by publishing and event that it is automatically subscribed to. </p>
-
 <blockquote>
 <p>Example: api/events/onTestEvent.js</p>
 </blockquote>
@@ -667,7 +681,12 @@ NOTE: Proxy Engine will automatically run the subscribe method for your events i
     <span class="k">return</span> <span class="nx">Promise</span><span class="p">.</span><span class="nx">reject</span><span class="p">()</span>
   <span class="p">}</span>
 <span class="p">}</span>
-</code></pre><h1 id='tutorial-task'>Tutorial: Task</h1>
+</code></pre>
+<p>The <code>subscribe()</code> method method has reserved functionality and is intended to automatically subscribe instances regardless of their worker profile.<br>
+This functionality can be disabled by setting <code>config.proxyEngine.events_config.auto_subscribe</code> to false.</p>
+
+<p>It&#39;s possible to have an instance level cron job gather information from a remote site and change the instance by publishing and event that it is automatically subscribed to. </p>
+<h1 id='tutorial-task'>Tutorial: Task</h1>
 <p>While event functions respond to events, tasks initiate functions allowed on a specific worker. A common use of a task is a micro-service or a worker environment for example, processing video or any other significant process that should be segregated out to a more adapt worker environment.</p>
 <h2 id='creating-task-functions'>Creating Task functions</h2>
 <p>Create tasks in the <code>/api/tasks</code> directory. </p>
@@ -695,6 +714,8 @@ NOTE: Proxy Engine will automatically run the subscribe method for your events i
 <span class="p">}</span>
 </code></pre>
 <p>The <code>schedule()</code> method has reserved functionality and is intended to automatically schedule other tasks regardless of worker profile.  This is useful for cron jobs that do instance level maintenance. It is not recommended to be used for cron jobs that perform global operations.</p>
+
+<p>This feature can be disabled by setting <code>config.proxyEngine.crons_config.auto_schedule</code> to false.</p>
 
 <aside class="success">
 NOTE: If a Cron fails, it is not automatically retried. If you want parts of your cron job to retry automatically, you will need publish them as an event and consume them as a subscriber.
@@ -760,7 +781,65 @@ NOTE: If a Cron fails, it is not automatically retried. If you want parts of you
       </span><span class="p">}</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}]</span><span class="w">
-</span></code></pre><h1 id='api-controllers'>API: Controllers</h1><h2 id='eventcontroller'>EventController</h2><h1 id='api-crons'>API: Crons</h1>
+</span></code></pre><h2 id='get-events'>GET /events</h2>
+<p>Get a list of Events</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>offset</td>
+<td>Integer</td>
+<td>The offset of records</td>
+</tr>
+<tr>
+<td>limit</td>
+<td>Integer</td>
+<td>The limit of records to return</td>
+</tr>
+<tr>
+<td>where</td>
+<td>Object</td>
+<td>The criteria for records to match</td>
+</tr>
+<tr>
+<td>sort</td>
+<td>Array</td>
+<td>Sequelize order for records to be returned</td>
+</tr>
+</tbody></table>
+<h2 id='post-event'>POST /event</h2>
+<p>Create a new Event.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+</tbody></table>
+<h2 id='get-event-id'>GET /event/:id</h2>
+<p>Get an Event by ID</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>Integer</td>
+<td>The ID of the event</td>
+</tr>
+</tbody></table>
+<h1 id='api-controllers'>API: Controllers</h1><h2 id='eventcontroller'>EventController</h2><h1 id='api-crons'>API: Crons</h1>
 <blockquote>
 <p>Example api/crons/index.js</p>
 </blockquote>
