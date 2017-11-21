@@ -133,6 +133,8 @@ module.exports = {
   profile: 'testProfile',
   // Configure Cron Jobs
   crons_config: {
+    // If a Cron class has a 'schedule' method, automatically call it on config.
+    auto_schedule: true,
     // Delay when cron jobs are allowed to start being processed in seconds
     uptime_delay: 180,
     // The profiles that are able to run specified crons
@@ -145,6 +147,9 @@ module.exports = {
   },
   // Configure Events
   events_config: {
+    // if the Event class has a 'subscribe' method, automatically call it during config.
+    auto_subscribe: true,
+    // The profiles that are able to run specified events
     profiles: {
       // If the worker matches `testProfile`, then it's events can run
       testProfile:  ['onTestEvent.test'],
@@ -252,7 +257,6 @@ Once subscribed, to unsubscribe just call the unsubscribe method using the token
 Create events in the `/api/events` directory.
 
 #### Subscribe
-The `subscribe()` method method has reserved functionality and is intended to automatically subscribe instances regardless of their worker profile.  It's possible to have an instance level cron job gather information from a remote site and change the instance by publishing and event that it is automatically subscribed to. 
 
 > Example: api/events/onTestEvent.js
 
@@ -275,6 +279,11 @@ module.exports = class onTestEvent extends Event {
   }
 }
 ```
+
+The `subscribe()` method method has reserved functionality and is intended to automatically subscribe instances regardless of their worker profile.  
+This functionality can be disabled by setting `config.proxyEngine.events_config.auto_subscribe` to false.
+
+It's possible to have an instance level cron job gather information from a remote site and change the instance by publishing and event that it is automatically subscribed to. 
 
 # Tutorial: Task
 While event functions respond to events, tasks initiate functions allowed on a specific worker. A common use of a task is a micro-service or a worker environment for example, processing video or any other significant process that should be segregated out to a more adapt worker environment.
@@ -313,12 +322,15 @@ module.exports = class onTestCron extends Cron {
 ```
 The `schedule()` method has reserved functionality and is intended to automatically schedule other tasks regardless of worker profile.  This is useful for cron jobs that do instance level maintenance. It is not recommended to be used for cron jobs that perform global operations.
 
+This feature can be disabled by setting `config.proxyEngine.crons_config.auto_schedule` to false.
+
 <aside class="success">
 NOTE: If a Cron fails, it is not automatically retried. If you want parts of your cron job to retry automatically, you will need publish them as an event and consume them as a subscriber.
 </aside>
 
 # API: Endpoints
-## 
+
+
 ```json
 [{
     method: ['GET'],
@@ -382,6 +394,30 @@ NOTE: If a Cron fails, it is not automatically retried. If you want parts of you
     }
 }]
 ```
+
+## GET /events
+Get a list of Events
+
+Parameter | Type |  Description
+--------- | ---- |  -----------
+offset | Integer | The offset of records
+limit | Integer | The limit of records to return
+where | Object | The criteria for records to match
+sort | Array | Sequelize order for records to be returned
+
+
+## POST /event
+Create a new Event.
+
+Parameter | Type |  Description
+--------- | ---- |  -----------
+
+## GET /event/:id
+Get an Event by ID
+
+Parameter | Type |  Description
+--------- | ---- |  -----------
+id | Integer | The ID of the event
 
 # API: Controllers
 
